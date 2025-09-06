@@ -1,4 +1,4 @@
-$$ Sistema de Gestão de Entregas para Condomínios
+## Sistema de Gestão de Entregas para Condomínios
 
 Projeto Integrador – Curso de Análise e Desenvolvimento de Sistemas – Senac
 
