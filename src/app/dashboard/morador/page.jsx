@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 
 export default function DashboardMorador() {
   const [entregas, setEntregas] = useState([]);
-  const [confirmadas, setConfirmadas] = useState([]);
 
   useEffect(() => {
     const fetchEntregas = async () => {
@@ -18,38 +17,38 @@ export default function DashboardMorador() {
 
         if (res.ok) {
           const data = await res.json();
-          setEntregas(data);
+          
+          const dataWithStatus = data.map((e) => ({ ...e, confirmada: false }));
+          setEntregas(dataWithStatus);
         }
       } catch (err) {
         console.error("Erro ao buscar entregas:", err);
       }
     };
 
-
-    const entregaConfirmada = (_id) => {
-      setConfirmadas((prev) => [...prev, _id]);
-    };
-
     fetchEntregas();
-    const interval = setInterval(fetchEntregas, 5000); 
+    const interval = setInterval(fetchEntregas, 5000);
     return () => clearInterval(interval);
   }, []);
 
-  return (
-    <div className="min-h-screen  text-gray-900">
+  const entregaConfirmada = (_id) => {
+    // atualiza localmente a entrega para confirmada
+    setEntregas((prev) =>
+      prev.map((e) => (e._id === _id ? { ...e, confirmada: true } : e))
+    );
+  };
 
+  return (
+    <div className="min-h-screen text-gray-900">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-10">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-sm">
-
               <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor">
                 <path strokeWidth="1.5" d="M3 7.5 12 3l9 4.5M3 7.5 12 12m0-9 9 4.5M3 7.5v9L12 21m0-9v9m9-13.5v9L12 21" />
               </svg>
             </span>
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
-              Minhas Entregas
-            </h1>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Minhas Entregas</h1>
           </div>
 
           <span className="hidden sm:inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-700">
@@ -58,11 +57,7 @@ export default function DashboardMorador() {
           </span>
         </div>
 
-
-        <p className="mt-2 text-sm text-black">
-          Acompanhe suas encomendas e confirme a retirada na portaria.
-        </p>
-
+        <p className="mt-2 text-sm text-black">Acompanhe suas encomendas e confirme a retirada na portaria.</p>
 
         <div className="mt-8">
           {entregas.length === 0 ? (
@@ -74,51 +69,42 @@ export default function DashboardMorador() {
                 </svg>
               </div>
               <h2 className="text-lg font-semibold">Nenhuma entrega pendente</h2>
-              <p className="mt-1 text-sm text-gray-600">
-                Você será notificado quando algo chegar para você.
-              </p>
+              <p className="mt-1 text-sm text-gray-600">Você será notificado quando algo chegar para você.</p>
             </div>
           ) : (
             <ul className="space-y-3 max-w-3xl mx-auto">
-              {entregas.map((e) => {
-                const isOk = confirmadas.includes(e._id);
-                return (
-                  <li
-                    key={e._id}
-                    className="flex items-center justify-between gap-4 p-4 rounded-2xl border border-gray-200 bg-white/80 backdrop-blur shadow-sm hover:shadow-md transition"
-                  >
-
-                    <div className="flex items-center gap-3">
-                      <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700 border border-indigo-100">
-
-                        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor">
-                          <path strokeWidth="1.5" d="M3.75 6.75h16.5v10.5H3.75z" />
-                          <path strokeWidth="1.5" d="m3.75 6.75 8.25 6 8.25-6" />
-                        </svg>
-                      </span>
-                      <div>
-                        <p className="font-medium">{e.descricao}</p>
-
-                        <p className="text-xs text-gray-500">Recebido há 5 min</p>
-                      </div>
+              {entregas.map((e) => (
+                <li
+                  key={e._id}
+                  className="flex items-center justify-between gap-4 p-4 rounded-2xl border border-gray-200 bg-white/80 backdrop-blur shadow-sm hover:shadow-md transition"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700 border border-indigo-100">
+                      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor">
+                        <path strokeWidth="1.5" d="M3.75 6.75h16.5v10.5H3.75z" />
+                        <path strokeWidth="1.5" d="m3.75 6.75 8.25 6 8.25-6" />
+                      </svg>
+                    </span>
+                    <div>
+                      <p className="font-medium">{e.descricao}</p>
+                      <p className="text-xs text-gray-500">Recebido há 5 min</p>
                     </div>
+                  </div>
 
-
-                    <div className="flex items-center gap-3">
-
-                      <button
-                        onClick={() => entregaConfirmada(e._id)}
-                        className={`px-4 py-2 font-medium rounded-xl shadow  cursor-pointer transition
-                          ${isOk
-                            ? "bg-green-600 hover:bg-green-700 text-white"
-                            : "bg-blue-600 hover:bg-blue-700 text-white"}`}
-                      >
-                        {isOk ? "Confirmada" : "Confirmar"}
-                      </button>
-                    </div>
-                  </li>
-                );
-              })}
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => entregaConfirmada(e._id)}
+                      className={`px-4 py-2 font-medium rounded-xl shadow cursor-pointer transition ${
+                        e.confirmada
+                          ? "bg-green-600 hover:bg-green-700 text-white"
+                          : "bg-blue-600 hover:bg-blue-700 text-white"
+                      }`}
+                    >
+                      {e.confirmada ? "Confirmada" : "Confirmar"}
+                    </button>
+                  </div>
+                </li>
+              ))}
             </ul>
           )}
         </div>
