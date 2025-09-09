@@ -1,28 +1,48 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function DashboardMorador() {
+  const [entregas, setEntregas] = useState([]);
   const [confirmadas, setConfirmadas] = useState([]);
 
-  const entregas = [
-    { _id: "1", descricao: "Pacote 1" },
-    { _id: "2", descricao: "Pacote 2" },
-    { _id: "3", descricao: "Pacote 3" },
-  ];
+  useEffect(() => {
+    const fetchEntregas = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const res = await fetch("http://localhost:4000/api/deliveries/my-deliveries", {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+          },
+        });
 
-  const entregaConfirmada = (_id) => {
-    setConfirmadas((prev) => [...prev, _id]);
-  };
+        if (res.ok) {
+          const data = await res.json();
+          setEntregas(data);
+        }
+      } catch (err) {
+        console.error("Erro ao buscar entregas:", err);
+      }
+    };
+
+
+    const entregaConfirmada = (_id) => {
+      setConfirmadas((prev) => [...prev, _id]);
+    };
+
+    fetchEntregas();
+    const interval = setInterval(fetchEntregas, 5000); 
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="min-h-screen  text-gray-900">
-      
+
       <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-10">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-sm">
-             
+
               <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor">
                 <path strokeWidth="1.5" d="M3 7.5 12 3l9 4.5M3 7.5 12 12m0-9 9 4.5M3 7.5v9L12 21m0-9v9m9-13.5v9L12 21" />
               </svg>
@@ -38,12 +58,12 @@ export default function DashboardMorador() {
           </span>
         </div>
 
-        
+
         <p className="mt-2 text-sm text-black">
           Acompanhe suas encomendas e confirme a retirada na portaria.
         </p>
 
-      
+
         <div className="mt-8">
           {entregas.length === 0 ? (
             <div className="max-w-2xl mx-auto rounded-2xl border border-gray-200 bg-white/80 backdrop-blur p-6 shadow-sm text-center">
@@ -67,10 +87,10 @@ export default function DashboardMorador() {
                     key={e._id}
                     className="flex items-center justify-between gap-4 p-4 rounded-2xl border border-gray-200 bg-white/80 backdrop-blur shadow-sm hover:shadow-md transition"
                   >
-                   
+
                     <div className="flex items-center gap-3">
                       <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700 border border-indigo-100">
-                       
+
                         <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor">
                           <path strokeWidth="1.5" d="M3.75 6.75h16.5v10.5H3.75z" />
                           <path strokeWidth="1.5" d="m3.75 6.75 8.25 6 8.25-6" />
@@ -78,14 +98,14 @@ export default function DashboardMorador() {
                       </span>
                       <div>
                         <p className="font-medium">{e.descricao}</p>
-                        
+
                         <p className="text-xs text-gray-500">Recebido há 5 min</p>
                       </div>
                     </div>
 
-                   
+
                     <div className="flex items-center gap-3">
-                      
+
                       <button
                         onClick={() => entregaConfirmada(e._id)}
                         className={`px-4 py-2 font-medium rounded-xl shadow  cursor-pointer transition

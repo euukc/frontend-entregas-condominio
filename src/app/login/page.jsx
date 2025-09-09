@@ -13,7 +13,7 @@ export default function LoginPage() {
     e.preventDefault();
 
     // chamada ao backend (ajustar URL)
-    const res = await fetch("", {
+    const res = await fetch("http://localhost:4000/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, senha }),
@@ -21,7 +21,8 @@ export default function LoginPage() {
 
     if (res.ok) {
       const data = await res.json();
-      localStorage.setItem("token", data.token); // salva JWT
+      localStorage.setItem("token", data.token); 
+      
       // Redireciona de acordo com o role
       if (data.role === "porteiro") {
         router.push("/dashboard/porteiro");
