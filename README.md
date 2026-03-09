@@ -1,29 +1,53 @@
-## Sistema de Gestão de Entregas para Condomínios
+# Sistema de Gestão de Entregas para Condomínios
 
-Projeto Integrador – Curso de Análise e Desenvolvimento de Sistemas – Senac
+## Projeto Integrador – Análise e Desenvolvimento de Sistemas (Senac)
+Este projeto é uma solução desenvolvida para otimizar o fluxo de recebimento e retirada de encomendas em condomínios residenciais. A plataforma permite que porteiros registrem entradas e moradores confirmem retiradas, centralizando o controle e evitando extravios.
 
-Este projeto foi desenvolvido como parte do Projeto Integrador do curso de Análise e Desenvolvimento de Sistemas (ADS) no Senac.
-A aplicação tem como objetivo facilitar a gestão de entregas em condomínios, oferecendo uma solução simples, prática e eficiente.
 
- - Para simplificação, o sistema foi desenvolvido considerando apenas um condomínio, evitando complexidade desnecessária e permitindo o foco no fluxo principal de entregas.
+- Arquitetura e Tecnologias
+O projeto está totalmente hospedado na nuvem:
 
-** Funcionalidades (Features)
+Frontend: React/Next.js (Hospedado na Vercel)
 
- Porteiro registra a encomenda, informa o apartamento do destinatário e registra os dados básicos da entrega.
+Backend: Node.js/Express (Hospedado no Render)
 
-Morador confirma o recebimento, acessa o sistema e confirma a retirada da encomenda.
+Banco de Dados: MongoDB Atlas (Cloud NoSQL)
 
-** Controle de status da entrega
+Estilização: TailwindCSS
 
-Acompanhamento de entregas pendentes e entregas concluídas.
+Segurança: Autenticação JWT (JSON Web Tokens)
 
- Tecnologias utilizadas
+- Modelo de Banco de Dados (Modelo Físico)
+O sistema utiliza o MongoDB. Abaixo está a definição da estrutura de dados utilizada para atender aos requisitos de persistência:
 
-Frontend: React / Next.js
+Coleção: users
+Armazena os dados de acesso e perfis do sistema.
 
-Backend: Node.js
 
-Banco de Dados: MongoDB
+{
+  "_id": "ObjectId",
+  "email": "string (único)",
+  "senha": "string (hash)",
+  "role": "string (porteiro | morador)",
+  "apartamento": "string"
+}
+Coleção: entregas
+Armazena o registro de cada encomenda.
 
-Outros: TailwindCSS (estilização), Vercel/Render (deploy)
 
+{
+  "_id": "ObjectId",
+  "destinatario": "string",
+  "apartamento": "string",
+  "descricao": "string",
+  "status": "string (pendente | entregue)",
+  "data_recebimento": "timestamp",
+  "data_retirada": "timestamp (nulo se pendente)",
+  "registrado_por": "ObjectId (ref: users)"
+}
+
+
+- Links do Projeto (Deploy)
+Frontend (Vercel): 
+
+Backend API (Render): 
