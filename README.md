@@ -46,8 +46,3 @@ Armazena o registro de cada encomenda.
   "registrado_por": "ObjectId (ref: users)"
 }
 
-
-- Links do Projeto (Deploy)
-Frontend (Vercel): 
-
-Backend API (Render): 
