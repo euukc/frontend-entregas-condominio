@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Porteiro - Sistema de Entregas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #ffffff;
+            color: #111827;
+        }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen text-gray-900">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-10">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-sm">
+                        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor">
+                            <path stroke-width="1.5" d="M3 7.5 12 3l9 4.5M3 7.5 12 12m0-9 9 4.5M3 7.5v9L12 21m0-9v9m9-13.5v9L12 21" />
+                        </svg>
+                    </span>
+                    <h1 class="text-2xl font-bold">Painel do Porteiro</h1>
+                </div>
+                <a href="../../index.html" class="px-4 py-2 rounded-xl border border-gray-300 hover:bg-gray-50 transition">Sair</a>
+            </div>
+            <div class="mt-8 grid md:grid-cols-2 gap-8">
+                <div>
+                    <h2 class="text-xl font-semibold mb-4">Registrar Nova Entrega</h2>
+                    <form id="entregaForm" class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+                        <div class="space-y-4">
+                            <select id="moradorId" class="w-full rounded-xl border border-gray-200 bg-white p-3 text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-400 transition" required>
+                                <option value="">Selecione o Morador</option>
+                                <option value="1">João Silva - Apt 101</option>
+                                <option value="2">Maria Santos - Apt 102</option>
+                            </select>
+                            <input
+                                type="text"
+                                id="descricao"
+                                placeholder="Descrição da entrega"
+                                class="w-full rounded-xl border border-gray-200 bg-white p-3 text-sm placeholder-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-400 transition"
+                                required
+                            />
+                        </div>
+                        <button
+                            type="submit"
+                            class="mt-4 w-full rounded-xl bg-indigo-600 px-4 py-3 text-white font-medium shadow-md hover:bg-indigo-700 transition cursor-pointer"
+                        >
+                            Registrar Entrega
+                        </button>
+                    </form>
+                </div>
+                <div>
+                    <h2 class="text-xl font-semibold mb-4">Entregas Pendentes</h2>
+                    <div class="space-y-4">
+                        <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+                            <h3 class="font-semibold">Pacote da Amazon</h3>
+                            <p class="text-sm text-gray-600">Morador: João Silva</p>
+                            <p class="text-sm text-gray-600">Status: Pendente</p>
+                        </div>
+                        <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+                            <h3 class="font-semibold">Carta Oficial</h3>
+                            <p class="text-sm text-gray-600">Morador: Maria Santos</p>
+                            <p class="text-sm text-gray-600">Status: Pendente</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('entregaForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const moradorId = document.getElementById('moradorId').value;
+            const descricao = document.getElementById('descricao').value;
+            if (moradorId && descricao) {
+                alert('Entrega registrada com sucesso!');
+                document.getElementById('entregaForm').reset();
+            }
+        });
+    </script>
+</body>
+</html>

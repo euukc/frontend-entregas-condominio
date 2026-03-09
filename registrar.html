@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar - Sistema de Entregas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(to bottom right, #eef2ff, #ffffff, #faf5ff);
+            color: #111827;
+        }
+        .bg-blur {
+            position: absolute;
+            inset: 0;
+            background-image: url('bg.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: blur(4px);
+            z-index: -10;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-blur"></div>
+    <div class="min-h-screen flex items-center justify-center px-6 py-12 text-gray-900">
+        <form id="registerForm" class="w-full max-w-md rounded-2xl border border-gray-200 bg-white/80 backdrop-blur p-8 shadow-lg">
+            <div class="mb-6 text-center">
+                <div class="mx-auto mb-3 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-sm">
+                    <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor">
+                        <path stroke-width="1.5" d="M3 7.5 12 3l9 4.5M3 7.5 12 12m0-9 9 4.5M3 7.5v9L12 21m0-9v9m9-13.5v9L12 21" />
+                    </svg>
+                </div>
+                <h1 class="text-2xl font-bold tracking-tight">Registrar</h1>
+                <p class="mt-1 text-sm text-gray-600">Crie sua conta para acessar o sistema</p>
+            </div>
+            <div class="space-y-4">
+                <input
+                    type="text"
+                    id="nome"
+                    placeholder="Nome"
+                    class="w-full rounded-xl border border-gray-200 bg-white p-3 text-sm placeholder-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-400 transition"
+                    required
+                />
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Email"
+                    class="w-full rounded-xl border border-gray-200 bg-white p-3 text-sm placeholder-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-400 transition"
+                    required
+                />
+                <input
+                    type="password"
+                    id="senha"
+                    placeholder="Senha"
+                    class="w-full rounded-xl border border-gray-200 bg-white p-3 text-sm placeholder-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-400 transition"
+                    required
+                />
+                <select
+                    id="role"
+                    class="w-full rounded-xl border border-gray-200 bg-white p-3 text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-400 transition"
+                >
+                    <option value="morador">Morador</option>
+                    <option value="porteiro">Porteiro</option>
+                </select>
+            </div>
+            <button
+                type="submit"
+                class="mt-6 w-full rounded-xl bg-indigo-600 px-4 py-3 text-white font-medium shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition cursor-pointer"
+            >
+                Registrar
+            </button>
+            <p class="text-sm text-center mt-4">
+                Já tem conta? <a href="login.html" class="text-indigo-600 hover:underline">Faça login</a>
+            </p>
+        </form>
+    </div>
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+            const role = document.getElementById('role').value;
+            // Simular registro
+            if (nome && email && senha) {
+                alert('Usuário registrado com sucesso!');
+                window.location.href = 'login.html';
+            } else {
+                alert('Erro ao registrar usuário');
+            }
+        });
+    </script>
+</body>
+</html>
