@@ -7,9 +7,9 @@ Este projeto é uma solução desenvolvida para otimizar o fluxo de recebimento 
 - Arquitetura e Tecnologias
 O projeto está totalmente hospedado na nuvem:
 
-Frontend: React/Next.js (Hospedado na Vercel)
+Frontend: React/Next.js 
 
-Backend: Node.js/Express (Hospedado no Render)
+Backend: Node.js/Express 
 
 Banco de Dados: MongoDB Atlas (Cloud NoSQL)
 
